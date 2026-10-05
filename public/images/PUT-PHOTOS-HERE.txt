@@ -1,0 +1,3 @@
+Spiral photos live in public/images/gallery/ (1200 x 800 each).
+To change them, add the file there and update the PHOTOS list in lib/content.ts
+(src like "/images/gallery/photo-01.jpg"), in the order they should appear.

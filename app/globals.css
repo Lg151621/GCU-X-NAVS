@@ -1,0 +1,214 @@
+/* Layout: quiet editorial page. Minimal hero (mission statement), full-bleed scroll-driven photo spiral, then calm sections. Single dark theme by design. */
+:root{
+  --ink:#09070d;          /* glossy black */
+  --panel:#120e18;        /* raised surface */
+  --line:#262031;         /* dividers */
+  --white:#ffffff;        /* third color */
+  --muted:#a59db3;        /* secondary text */
+  --gcu:#522398;          /* GCU purple, PMS 267 C */
+  --gcu-hi:#6a35b8;       /* purple hover */
+  --lav:#c8b4f0;          /* lavender, readable purple for text on black */
+  --display:var(--font-instrument-serif),"Instrument Serif","Cormorant Garamond",Georgia,serif;
+  --body:var(--font-hanken-grotesk),"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font:17px/1.65 var(--body);padding-inline:20px;overflow-x:clip;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--lav);outline-offset:3px;border-radius:4px}
+.ph{color:var(--lav);border-bottom:1px dotted var(--lav);white-space:nowrap}
+.label{display:block;font:600 12px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--lav)}
+em{font-style:italic;color:var(--lav)}
+
+/* nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inline:-20px;padding:0 20px;background:var(--ink)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:1160px;margin:0 auto;height:72px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo{width:38px;height:auto;display:block}
+.hero-logo{width:56px;height:auto;margin-bottom:28px}
+.brand b{display:block;font:400 24px/1 var(--display)}
+.brand small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.links{display:flex;align-items:center;gap:30px;font-size:15px;font-weight:500}
+.links a{text-decoration:none;color:var(--white);padding-block:6px;border-bottom:1px solid transparent}
+.links a:hover{border-bottom-color:var(--lav)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--white);border-radius:999px;padding:8px 16px;font:500 14px var(--body);cursor:pointer}
+@media (max-width:880px){
+  .menu-btn{display:block}
+  .links{display:none;position:absolute;left:0;right:0;top:72px;flex-direction:column;align-items:flex-start;gap:4px;padding:12px 20px 20px;background:var(--ink);border-bottom:1px solid var(--line)}
+  .links.open{display:flex}
+  .links a{font-size:18px;padding-block:10px}
+  .links .btn{margin-top:8px}
+}
+
+/* buttons: flat, no glow */
+.btn{display:inline-flex;align-items:center;padding:13px 26px;border-radius:999px;font:500 15px var(--body);letter-spacing:.02em;text-decoration:none;border:1px solid var(--white);color:var(--white);background:transparent;transition:background .2s,color .2s}
+.btn:hover{background:var(--white);color:var(--ink)}
+.btn.primary{background:var(--gcu);border-color:var(--gcu);color:var(--white)}
+.btn.primary:hover{background:var(--gcu-hi);border-color:var(--gcu-hi);color:var(--white)}
+.links .btn{padding:10px 20px;font-size:14px;border-bottom:1px solid var(--gcu)}
+
+/* hero */
+.hero{
+  text-align:center;
+  /* fill the first screen below the nav (72px), so the next section only appears on scroll */
+  min-height:calc(100vh - 72px);
+  min-height:calc(100svh - 72px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  /* more space below than above, so the statement sits slightly above center */
+  padding-block:clamp(48px,7vh,80px) clamp(64px,9vh,104px);
+}
+.hero h1{
+  font:400 clamp(44px,7.2vw,108px)/1.02 var(--display);
+  letter-spacing:-.02em;
+  margin:28px 0 0;
+  max-width:17ch;
+  text-wrap:balance;
+}
+
+/* spiral gallery */
+.gallery{width:100vw;margin-left:calc(50% - 50vw)}
+.gallery-intro{text-align:center;padding:clamp(48px,6vw,72px) 20px 0}
+.gallery-intro h2{margin-top:18px}
+.gallery-intro{padding-bottom:clamp(56px,7vw,88px)}
+.gallery-intro p{margin:18px auto 0;max-width:46ch;color:var(--muted)}
+/* disclosure control for the spiral */
+.reveal-btn{gap:10px;margin-top:28px;border-color:var(--line);font:inherit;font-size:15px;font-weight:500;cursor:pointer}
+.reveal-btn:hover{background:transparent;color:var(--white);border-color:var(--lav)}
+.reveal-btn svg{color:var(--lav);transition:transform .3s ease}
+.reveal-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+/* height reveal; overflow:clip (not hidden) so the sticky stage inside keeps working */
+.spiral-reveal{display:grid;grid-template-rows:0fr;opacity:0;overflow:clip;transition:grid-template-rows .7s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
+.spiral-reveal.open{grid-template-rows:1fr;opacity:1}
+.spiral-reveal-inner{min-height:0}
+@media (prefers-reduced-motion:reduce){.spiral-reveal,.reveal-btn svg{transition:none}}
+/* The first card starts at the stage's vertical center with the rest below it, so the stage's
+   top half is empty at first. Pulling the run up by 30svh tucks that empty band under the
+   heading; the stage is transparent there, so the heading stays visible. */
+.spiral-run{position:relative;height:440vh;margin-top:-30vh;margin-top:-30svh}
+.spiral-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;perspective:1500px;perspective-origin:50% 45%}
+.spiral{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+.card{position:absolute;left:0;top:0;transform-style:preserve-3d}
+.strip{position:absolute;left:0;top:0;background-repeat:no-repeat}
+.spiral-stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(transparent,var(--ink));pointer-events:none;z-index:4}
+.spiral-cap{position:absolute;left:clamp(20px,5vw,64px);bottom:clamp(28px,6vh,56px);z-index:5;pointer-events:none}
+.spiral-cap .t{font:400 clamp(28px,3.4vw,40px)/1 var(--display);margin-top:10px}
+
+/* sections */
+section{padding-block:clamp(80px,10vw,128px);border-top:1px solid var(--line)}
+.gallery{padding-block:0}
+.sec-head{max-width:720px;margin-bottom:56px}
+h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;margin:18px 0 0;text-wrap:balance}
+.sec-head p{color:var(--muted);margin:22px 0 0;max-width:58ch}
+
+.mission{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+@media (max-width:860px){.mission{grid-template-columns:1fr}}
+.mission article{padding:32px 32px 8px 0}
+.mission article+article{padding-left:32px;border-left:1px solid var(--line)}
+@media (max-width:860px){.mission article,.mission article+article{padding:28px 0;border-left:0;border-bottom:1px solid var(--line)}}
+.mission h3{font:400 36px/1.05 var(--display);margin:0}
+.mission p{color:var(--muted);margin:14px 0 0}
+.ref{display:inline-block;margin-top:18px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--lav)}
+.doers{margin-top:72px;padding:clamp(36px,5vw,64px);background:var(--gcu);border-radius:4px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px 56px;align-items:end}
+@media (max-width:860px){.doers{grid-template-columns:1fr}}
+.doers blockquote{margin:0;font:400 clamp(30px,3.8vw,48px)/1.1 var(--display);text-wrap:balance}
+.doers blockquote em{color:var(--white)}
+.doers p{margin:0;color:rgba(255,255,255,.82)}
+.doers .ref{color:var(--white)}
+
+#week{padding-block:clamp(56px,6vw,80px) clamp(52px,6vw,80px)}
+#week .sec-head{margin-bottom:clamp(36px,4vw,48px)}
+.week{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:920px){.week{grid-template-columns:1fr}}
+.event{padding:32px;background:var(--panel);border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;gap:14px}
+.event.feature{border-color:var(--gcu);box-shadow:inset 0 3px 0 var(--gcu)}
+.when{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
+.event h3{font:400 38px/1 var(--display);margin:0}
+.event p{color:var(--muted);margin:0}
+.event dl{margin:auto 0 0;padding-top:18px;border-top:1px solid var(--line);display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;font-size:15px}
+.event dt{color:var(--muted)}
+.event dd{margin:0}
+.aside{margin:24px 0 0;color:var(--muted);font-size:15px}
+
+/* tighter section padding than the default sections; the split card brings its own presence */
+#staff{padding-block:clamp(64px,7vw,96px) clamp(48px,5vw,72px)}
+/* --split-h: card height. The stage is only as tall as the card and pins it centered
+   below the nav (73px), so there is no empty band above or below the card.
+   Run height = card + scroll distance for the animation (180vh). */
+.split-run{--split-h:min(560px,calc(100svh - 160px));position:relative;height:calc(var(--split-h) + 180vh)}
+.split-stage{position:sticky;top:calc(73px + (100svh - 73px - var(--split-h)) / 2);height:var(--split-h);display:grid;place-items:center;perspective:1800px}
+.split{position:relative;display:flex;justify-content:center;width:min(100%,1080px);height:var(--split-h)}
+/* panels overlap by 1px so no seam shows while the card is whole */
+.panel{position:relative;flex:0 0 calc(33.334% + 1px);margin-left:-1px;height:100%;transform-style:preserve-3d;will-change:transform}
+.panel:first-child{margin-left:0}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.front{background:#0e0b14;border:1px solid var(--line)}
+.panel:nth-child(1) .front{border-right:0}
+.panel:nth-child(2) .front{border-left:0;border-right:0}
+.panel:nth-child(3) .front{border-left:0}
+.split.apart .panel .front{border:1px solid var(--line)}
+.front-inner{position:absolute;top:0;height:100%;width:300%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 clamp(32px,7%,96px);background:radial-gradient(60% 70% at 50% 100%,rgba(82,35,152,.22),transparent 70%),#0e0b14}
+.verse{font:400 clamp(34px,4.6vw,66px)/1.02 var(--display);letter-spacing:-.02em;max-width:20ch;text-wrap:balance;margin:28px 0 0;color:var(--white)}
+.verse em{font-style:italic;color:var(--lav)}
+.verse-ref{display:block;font:600 12px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--lav)}
+.back{transform:rotateY(180deg);background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
+.back .pic{flex:1 1 auto;min-height:0;position:relative;background:linear-gradient(160deg,#241539,#100c16)}
+.back .info{padding:20px 22px 24px;min-height:172px}
+.back .role{display:block;margin:0;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
+.back h3{font:400 30px/1.05 var(--display);margin:8px 0}
+.back p{margin:0;color:var(--muted);font-size:15px;line-height:1.55}
+
+/* phones: no split, verse card then stacked staff cards */
+.split-mobile{display:none}
+@media (max-width:760px){
+  .split-run{display:none}
+  .split-mobile{display:grid;gap:20px}
+  .split-mobile .vcard{padding:48px 28px;text-align:center;background:#0e0b14;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center}
+  .split-mobile .vcard .verse{margin:20px auto 0}
+  .split-mobile .back{position:static;transform:none}
+  .split-mobile .back .pic{flex:none;aspect-ratio:1/1;max-width:100%}
+  .back .info{min-height:0}
+}
+
+.parents{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px}
+@media (max-width:880px){.parents{grid-template-columns:1fr;gap:32px}}
+.qa div{padding:26px 0;border-top:1px solid var(--line)}
+.qa h3{margin:0;font:400 28px/1.15 var(--display)}
+.qa p{margin:10px 0 0;color:var(--muted)}
+.facts{display:grid;gap:20px;align-content:start}
+.fact{padding:26px 0;border-top:1px solid var(--line);display:flex;gap:22px;align-items:baseline}
+.fact .big{font:400 56px/1 var(--display);color:var(--lav);font-variant-numeric:tabular-nums}
+.fact p{margin:0;color:var(--muted)}
+.support{padding:32px;background:var(--gcu);border-radius:4px}
+.support h3{margin:0;font:400 34px/1.05 var(--display)}
+.support p{margin:12px 0 22px;color:rgba(255,255,255,.85)}
+.support .btn:hover{color:var(--gcu)}
+
+#connect{padding-bottom:clamp(40px,5vw,56px)}
+.connect{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);border-top:1px solid var(--line)}
+@media (max-width:860px){.connect{grid-template-columns:1fr}}
+.way{padding:32px 32px 32px 0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.way+.way{padding-left:32px;border-left:1px solid var(--line)}
+@media (max-width:860px){.way,.way+.way{padding:28px 0;border-left:0;border-bottom:1px solid var(--line)}}
+.way h3{margin:0;font:400 32px/1.05 var(--display)}
+.way .val{color:var(--lav);word-break:break-word}
+.way p{margin:0;color:var(--muted);font-size:16px}
+.copy{align-self:flex-start;margin-top:10px;background:transparent;border:1px solid var(--line);color:var(--white);border-radius:999px;padding:8px 18px;font:500 14px var(--body);cursor:pointer}
+.copy:hover{border-color:var(--white)}
+.groupme{flex-direction:row;align-items:center;gap:36px}
+.qr-card{flex:none;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:4px;box-shadow:inset 0 3px 0 var(--gcu)}
+/* GroupMe's QR image has its own margin around the code, so it is shown as is */
+.qr{display:block;width:200px;height:200px;border-radius:10px}
+.qr-empty{display:grid;place-items:center;background:linear-gradient(160deg,#241539,#100c16);border:1px dashed var(--lav);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.groupme-text{display:flex;flex-direction:column;gap:10px;min-width:0}
+.groupme-text .lead{color:var(--white);font-size:18px}
+.groupme-text .btn{align-self:flex-start;margin-top:12px}
+.email{justify-content:center}
+@media (max-width:560px){.groupme{flex-direction:column;align-items:flex-start;gap:24px}}
+
+footer{padding-block:44px 60px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line)}
+footer b{color:var(--white);font:400 22px var(--display)}

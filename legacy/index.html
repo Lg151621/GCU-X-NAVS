@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Navigators at GCU</title>
+<meta name="description" content="The Navigators at Grand Canyon University. To know Christ, make Him known, and help others do the same.">
+<link rel="icon" href="assets/navigators-logo-white.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: quiet editorial page. Minimal hero (mission statement), full-bleed scroll-driven photo spiral, then calm sections. Single dark theme by design. */
+:root{
+  --ink:#09070d;          /* glossy black */
+  --panel:#120e18;        /* raised surface */
+  --line:#262031;         /* dividers */
+  --white:#ffffff;        /* third color */
+  --muted:#a59db3;        /* secondary text */
+  --gcu:#522398;          /* GCU purple, PMS 267 C */
+  --gcu-hi:#6a35b8;       /* purple hover */
+  --lav:#c8b4f0;          /* lavender, readable purple for text on black */
+  --display:"Instrument Serif","Cormorant Garamond",Georgia,serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font:17px/1.65 var(--body);padding-inline:20px;overflow-x:clip;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--lav);outline-offset:3px;border-radius:4px}
+.ph{color:var(--lav);border-bottom:1px dotted var(--lav);white-space:nowrap}
+.label{display:block;font:600 12px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--lav)}
+em{font-style:italic;color:var(--lav)}
+
+/* nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inline:-20px;padding:0 20px;background:var(--ink);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:1160px;margin:0 auto;height:72px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo{width:38px;height:auto;display:block}
+.hero-logo{width:64px;height:auto;margin-bottom:30px}
+.brand b{display:block;font:400 24px/1 var(--display)}
+.brand small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.links{display:flex;align-items:center;gap:30px;font-size:15px;font-weight:500}
+.links a{text-decoration:none;color:var(--white);padding-block:6px;border-bottom:1px solid transparent}
+.links a:hover{border-bottom-color:var(--lav)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--white);border-radius:999px;padding:8px 16px;font:500 14px var(--body);cursor:pointer}
+@media (max-width:880px){
+  .menu-btn{display:block}
+  .links{display:none;position:absolute;left:0;right:0;top:72px;flex-direction:column;align-items:flex-start;gap:4px;padding:12px 20px 20px;background:var(--ink);border-bottom:1px solid var(--line)}
+  .links.open{display:flex}
+  .links a{font-size:18px;padding-block:10px}
+  .links .btn{margin-top:8px}
+}
+
+/* buttons: flat, no glow */
+.btn{display:inline-flex;align-items:center;padding:13px 26px;border-radius:999px;font:500 15px var(--body);letter-spacing:.02em;text-decoration:none;border:1px solid var(--white);color:var(--white);background:transparent;transition:background .2s,color .2s}
+.btn:hover{background:var(--white);color:var(--ink)}
+.btn.primary{background:var(--gcu);border-color:var(--gcu);color:var(--white)}
+.btn.primary:hover{background:var(--gcu-hi);border-color:var(--gcu-hi);color:var(--white)}
+.links .btn{padding:10px 20px;font-size:14px;border-bottom:1px solid var(--gcu)}
+
+/* hero */
+.hero{text-align:center;padding-block:clamp(110px,17vw,200px) clamp(90px,12vw,150px);display:flex;flex-direction:column;align-items:center}
+.hero h1{font:400 clamp(44px,7vw,100px)/1 var(--display);letter-spacing:-.02em;margin:28px 0 0;max-width:17ch;text-wrap:balance}
+.hero .meta{margin:40px 0 0;color:var(--muted);font-size:16px;letter-spacing:.04em}
+.hero .meta strong{color:var(--white);font-weight:500}
+.cta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.scroll-cue{margin-top:72px;display:flex;flex-direction:column;align-items:center;gap:12px;text-decoration:none;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.scroll-cue i{width:1px;height:48px;background:linear-gradient(var(--lav),transparent)}
+
+/* spiral gallery */
+.gallery{width:100vw;margin-left:calc(50% - 50vw);border-top:1px solid var(--line)}
+.gallery-intro{text-align:center;padding:clamp(72px,9vw,112px) 20px 0}
+.gallery-intro h2{margin-top:18px}
+.spiral-run{position:relative;height:460vh}
+.spiral-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;perspective:1500px;perspective-origin:50% 45%}
+.spiral{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+.card{position:absolute;left:0;top:0;transform-style:preserve-3d}
+.strip{position:absolute;left:0;top:0;background-repeat:no-repeat}
+.spiral-stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(transparent,var(--ink));pointer-events:none;z-index:4}
+.spiral-cap{position:absolute;left:clamp(20px,5vw,64px);bottom:clamp(28px,6vh,56px);z-index:5;pointer-events:none}
+.spiral-cap .t{font:400 clamp(28px,3.4vw,40px)/1 var(--display);margin-top:10px}
+.spiral-count{position:absolute;right:clamp(20px,5vw,64px);bottom:clamp(28px,6vh,56px);z-index:5;font-size:13px;letter-spacing:.16em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* sections */
+section{padding-block:clamp(80px,10vw,128px);border-top:1px solid var(--line)}
+.gallery{padding-block:0}
+.sec-head{max-width:720px;margin-bottom:56px}
+h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;margin:18px 0 0;text-wrap:balance}
+.sec-head p{color:var(--muted);margin:22px 0 0;max-width:58ch}
+
+.mission{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+@media (max-width:860px){.mission{grid-template-columns:1fr}}
+.mission article{padding:32px 32px 8px 0}
+.mission article+article{padding-left:32px;border-left:1px solid var(--line)}
+@media (max-width:860px){.mission article,.mission article+article{padding:28px 0;border-left:0;border-bottom:1px solid var(--line)}}
+.mission h3{font:400 36px/1.05 var(--display);margin:0}
+.mission p{color:var(--muted);margin:14px 0 0}
+.ref{display:inline-block;margin-top:18px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--lav)}
+.doers{margin-top:72px;padding:clamp(36px,5vw,64px);background:var(--gcu);border-radius:4px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px 56px;align-items:end}
+@media (max-width:860px){.doers{grid-template-columns:1fr}}
+.doers blockquote{margin:0;font:400 clamp(30px,3.8vw,48px)/1.1 var(--display);text-wrap:balance}
+.doers blockquote em{color:var(--white)}
+.doers p{margin:0;color:rgba(255,255,255,.82)}
+.doers .ref{color:var(--white)}
+
+.week{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:920px){.week{grid-template-columns:1fr}}
+.event{padding:32px;background:var(--panel);border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;gap:14px}
+.event.feature{border-color:var(--gcu);box-shadow:inset 0 3px 0 var(--gcu)}
+.when{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
+.event h3{font:400 38px/1 var(--display);margin:0}
+.event p{color:var(--muted);margin:0}
+.event dl{margin:auto 0 0;padding-top:18px;border-top:1px solid var(--line);display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;font-size:15px}
+.event dt{color:var(--muted)}
+.event dd{margin:0}
+.aside{margin-top:28px;color:var(--muted);font-size:15px}
+
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:980px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.team{grid-template-columns:1fr}}
+.person.directors{grid-column:span 2}
+@media (max-width:520px){.person.directors{grid-column:auto}}
+.photo{aspect-ratio:4/5;max-width:100%;display:grid;place-items:center;text-align:center;padding:16px;border-radius:4px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);background:linear-gradient(160deg,#241539,#100c16);border:1px solid var(--line)}
+.person.directors .photo{aspect-ratio:8/5}
+@media (max-width:980px){.person.directors .photo{aspect-ratio:8/5}}
+.role{display:block;margin-top:20px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
+.person h3{font:400 32px/1.05 var(--display);margin:8px 0 10px}
+.person p{color:var(--muted);margin:0;font-size:16px}
+
+.parents{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px}
+@media (max-width:880px){.parents{grid-template-columns:1fr;gap:32px}}
+.qa div{padding:26px 0;border-top:1px solid var(--line)}
+.qa h3{margin:0;font:400 28px/1.15 var(--display)}
+.qa p{margin:10px 0 0;color:var(--muted)}
+.facts{display:grid;gap:20px;align-content:start}
+.fact{padding:26px 0;border-top:1px solid var(--line);display:flex;gap:22px;align-items:baseline}
+.fact .big{font:400 56px/1 var(--display);color:var(--lav);font-variant-numeric:tabular-nums}
+.fact p{margin:0;color:var(--muted)}
+.support{padding:32px;background:var(--gcu);border-radius:4px}
+.support h3{margin:0;font:400 34px/1.05 var(--display)}
+.support p{margin:12px 0 22px;color:rgba(255,255,255,.85)}
+.support .btn:hover{color:var(--gcu)}
+
+.connect{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+@media (max-width:860px){.connect{grid-template-columns:1fr}}
+.way{padding:32px 32px 32px 0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.way+.way{padding-left:32px;border-left:1px solid var(--line)}
+@media (max-width:860px){.way,.way+.way{padding:28px 0;border-left:0;border-bottom:1px solid var(--line)}}
+.way h3{margin:0;font:400 32px/1.05 var(--display)}
+.way .val{color:var(--lav);word-break:break-word}
+.way p{margin:0;color:var(--muted);font-size:16px}
+.copy{align-self:flex-start;margin-top:10px;background:transparent;border:1px solid var(--line);color:var(--white);border-radius:999px;padding:8px 18px;font:500 14px var(--body);cursor:pointer}
+.copy:hover{border-color:var(--white)}
+
+footer{padding-block:44px 60px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line)}
+footer b{color:var(--white);font:400 22px var(--display)}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="#top">
+      <img class="logo" src="assets/navigators-logo-white.png" alt="The Navigators logo" width="38" height="37">
+      <span><b>The Navigators</b><small>Grand Canyon University</small></span>
+    </a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <div class="links" id="nav-links">
+      <a href="#who">About</a>
+      <a href="#week">Our week</a>
+      <a href="#staff">Staff</a>
+      <a href="#parents">Parents</a>
+      <a class="btn primary" href="#connect">Get connected</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <img class="hero-logo" src="assets/navigators-logo-white.png" alt="" width="64" height="62">
+    <span class="label">The Navigators at Grand Canyon University</span>
+    <h1>To know Christ, make Him known, <em>and help others do the same.</em></h1>
+    <p class="meta"><strong>NavNight</strong> &nbsp;·&nbsp; Mondays at <span class="ph">7:00 PM</span></p>
+    <div class="cta-row">
+      <a class="btn primary" href="#week">Come to NavNight</a>
+      <a class="btn" href="#parents">For parents</a>
+    </div>
+    <a class="scroll-cue" href="#gallery">Scroll<i></i></a>
+  </div>
+
+  <section class="gallery" id="gallery" aria-label="Photos of Navigators at GCU">
+    <div class="gallery-intro">
+      <span class="label">This is Navs</span>
+      <h2>Life <em>together.</em></h2>
+    </div>
+    <div class="spiral-run" id="spiral-run">
+      <div class="spiral-stage" id="spiral">
+        <div class="spiral" id="spiral-track"></div>
+        <div class="spiral-cap"><span class="label" id="cap-tag"></span><div class="t" id="cap-title" aria-live="polite"></div></div>
+        <div class="spiral-count" id="cap-count"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="who">
+    <div class="sec-head">
+      <span class="label">Who we are</span>
+      <h2>Not just hearers of the Word. <em>Doers.</em></h2>
+      <p>The Navigators started in 1933 with one man discipling sailors in the U.S. Navy. The idea hasn't changed: one life invested in another, who invests in another. That's what we're about at GCU.</p>
+    </div>
+    <div class="mission">
+      <article><h3><em>Know</em> Christ</h3><p>Abiding in Jesus through His Word, prayer, and a community that walks with you.</p><span class="ref">John 15:5</span></article>
+      <article><h3>Make Him <em>known</em></h3><p>Sharing the gospel on campus, in our dorms, and with students at ASU.</p><span class="ref">Matthew 28:19–20</span></article>
+      <article><h3><em>Help others</em> do the same</h3><p>Discipleship that multiplies. You learn it, live it, then pass it on to someone else.</p><span class="ref">2 Timothy 2:2</span></article>
+    </div>
+    <div class="doers">
+      <blockquote>We don't just want to consume the Word. We want to <em>follow it</em> and <em>pass it on.</em></blockquote>
+      <p>Scripture is meant to change how we live and then be shared. Everything we do, from NavNight to Friday outreach, is built around that.<br><span class="ref">James 1:22</span></p>
+    </div>
+  </section>
+
+  <section id="week">
+    <div class="sec-head">
+      <span class="label">Our week</span>
+      <h2>Gather. Pray. <em>Go.</em></h2>
+      <p>Three rhythms shape our week. Come to one or all three. No experience needed, and you don't need a friend to bring you.</p>
+    </div>
+    <div class="week">
+      <article class="event feature">
+        <span class="when">Mondays · <span class="ph">7:00 PM</span></span>
+        <h3>NavNight</h3>
+        <p>Our main weekly gathering, centered on abiding in Jesus and what that looks like in everyday life as a student.</p>
+        <dl><dt>Where</dt><dd><span class="ph">Building &amp; room</span></dd><dt>Bring</dt><dd>A Bible if you have one</dd></dl>
+      </article>
+      <article class="event">
+        <span class="when">Fridays · 8:00 AM</span>
+        <h3>Prayer walk</h3>
+        <p>We start Friday mornings walking campus together and praying for GCU, our classmates, and our city.</p>
+        <dl><dt>Meet at</dt><dd><span class="ph">Meeting spot</span></dd><dt>Length</dt><dd><span class="ph">About 45 min</span></dd></dl>
+      </article>
+      <article class="event">
+        <span class="when">Every other Friday</span>
+        <h3>ASU outreach</h3>
+        <p>We head to Arizona State to share the gospel and have real conversations about Jesus. First-timers go out with someone experienced.</p>
+        <dl><dt>Leave from</dt><dd><span class="ph">Pickup spot &amp; time</span></dd><dt>Next trip</dt><dd><span class="ph">Date</span></dd></dl>
+      </article>
+    </div>
+    <p class="aside">Nervous about outreach? Everyone is the first time. We'll pair you with someone.</p>
+  </section>
+
+  <section id="staff">
+    <div class="sec-head">
+      <span class="label">Our staff</span>
+      <h2>The people who'll <em>walk with you.</em></h2>
+      <p>Our staff are full-time with The Navigators. They spend their weeks meeting with students one-on-one, leading Bible studies, and training student leaders.</p>
+    </div>
+    <div class="team">
+      <article class="person directors">
+        <div class="photo">Photo of Cam &amp; Emma</div>
+        <span class="role">Directors</span>
+        <h3>Cam &amp; Emma Kessner</h3>
+        <p><span class="ph">Short bio</span>: how they came to Navs, what they love about GCU, a fun fact or two.</p>
+      </article>
+      <article class="person">
+        <div class="photo">Photo of Emily</div>
+        <span class="role">Staff</span><h3>Emily <span class="ph">Last name</span></h3><p><span class="ph">One or two sentences</span></p>
+      </article>
+      <article class="person">
+        <div class="photo">Photo of Elyse</div>
+        <span class="role">Staff</span><h3>Elyse <span class="ph">Last name</span></h3><p><span class="ph">One or two sentences</span></p>
+      </article>
+    </div>
+  </section>
+
+  <section id="parents">
+    <div class="sec-head">
+      <span class="label">For parents</span>
+      <h2>Who your student is <em>spending time with.</em></h2>
+      <p>Sending a student off to college is a big step. Here's what you should know about us.</p>
+    </div>
+    <div class="parents">
+      <div class="qa">
+        <div><h3>Who are The Navigators?</h3><p>A nondenominational Christian ministry founded in 1933, with staff on college campuses, military bases, and in communities across the U.S. and around the world.</p></div>
+        <div><h3>Who leads the GCU group?</h3><p>Cam and Emma Kessner direct the ministry, alongside staff members Emily and Elyse. Student leaders are trained and mentored by staff.</p></div>
+        <div><h3>What does a typical week look like?</h3><p>A Monday evening gathering, an optional Friday morning prayer walk, and an outreach trip to ASU every other Friday. Students also meet in small groups and one-on-one with a mentor.</p></div>
+        <div><h3>How do I reach someone?</h3><p>Email the staff at <span class="ph">staff email</span>. We're always glad to talk.</p></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><div class="big">1933</div><p>The year The Navigators began, built on 2 Timothy 2:2 and life-to-life discipleship.</p></div>
+        <div class="fact"><div class="big">4</div><p>Full-time staff investing in GCU students every week.</p></div>
+        <div class="support">
+          <h3>Support our staff</h3>
+          <p>Navigators staff raise their own support. If this ministry has meant something to your family, you can partner with them. <span class="ph" style="color:#fff;border-color:#fff">Add giving link</span></p>
+          <a class="btn" href="#parents">Give to our staff</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="connect">
+    <div class="sec-head">
+      <span class="label">Come say hi</span>
+      <h2>See you <em>Monday.</em></h2>
+      <p>The easiest first step is showing up to NavNight. If you'd rather reach out first, any of these works.</p>
+    </div>
+    <div class="connect">
+      <div class="way"><h3>Instagram</h3><div class="val" id="v-ig">@gcunavs (placeholder)</div><p>Photos, updates, and this week's plans.</p><button class="copy" data-copy="v-ig" type="button">Copy handle</button></div>
+      <div class="way"><h3>Group chat</h3><div class="val" id="v-gc">GroupMe link (placeholder)</div><p>Where rides, meetups, and last-minute changes go out.</p><button class="copy" data-copy="v-gc" type="button">Copy link</button></div>
+      <div class="way"><h3>Email the staff</h3><div class="val" id="v-em">staff@email.com (placeholder)</div><p>Questions about Navs, for students or parents.</p><button class="copy" data-copy="v-em" type="button">Copy email</button></div>
+    </div>
+  </section>
+
+  <footer>
+    <span><b>The Navigators at GCU</b></span>
+    <span>To know Christ, make Him known, and help others do the same.</span>
+  </footer>
+</main>
+
+<script>
+/* ---- Photos for the spiral ----
+   Put a real image URL in src for each one. Until then, a soft purple placeholder shows. */
+var PHOTOS = [
+  { src:null, alt:"Students worshiping at NavNight", label:"NavNight", tag:"Mondays", tint:"linear-gradient(150deg,#5b2aa3,#1a0c30)" },
+  { src:null, alt:"Friday morning prayer walk across campus", label:"Prayer walks", tag:"Fridays at 8am", tint:"linear-gradient(150deg,#7a5aa8,#22163a)" },
+  { src:null, alt:"Sharing the gospel at ASU", label:"ASU outreach", tag:"Every other Friday", tint:"linear-gradient(150deg,#3b1a70,#0f0819)" },
+  { src:null, alt:"Small group Bible study", label:"Bible study", tag:"Small groups", tint:"linear-gradient(150deg,#9b86c4,#2b2140)" },
+  { src:null, alt:"Students hanging out together", label:"Community", tag:"Life together", tint:"linear-gradient(150deg,#6d4fa0,#160f22)" }
+];
+var REPEAT = 3;               // how many times the photos loop along the spiral
+var CARD_ASPECT = 1.5;        // width / height
+var STRIPS = 10;              // segments per card, gives the curved look
+var STEP_DEG = 38;            // turn between neighbouring cards
+var LEAN = 0.55;              // how far the spiral leans to the right as it rises
+
+(function(){
+  var run=document.getElementById('spiral-run'), stage=document.getElementById('spiral'), track=document.getElementById('spiral-track');
+  var capTag=document.getElementById('cap-tag'), capTitle=document.getElementById('cap-title'), capCount=document.getElementById('cap-count');
+  var N=PHOTOS.length*REPEAT, reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var p=0, target=0, last=performance.now(), lastCap=-1, gap=0, R=0, cards=[], step=STEP_DEG*Math.PI/180;
+
+  function build(){
+    track.innerHTML=''; cards=[];
+    var W=stage.clientWidth, H=stage.clientHeight;
+    var cw=Math.min(340, W*0.22, H*0.32*CARD_ASPECT); if(W<600) cw=W*0.42;
+    var ch=cw/CARD_ASPECT; R=cw*1.9; var span=cw/R, sa=span/STRIPS, sw=2*R*Math.sin(sa/2)+3;
+    gap=ch*0.85;
+    for(var i=0;i<N;i++){
+      var ph=PHOTOS[i%PHOTOS.length], card=document.createElement('div');
+      card.className='card';
+      cards.push(card);
+      var bg=ph.src?'url("'+ph.src+'")':ph.tint;
+      for(var j=0;j<STRIPS;j++){
+        var s=document.createElement('div'); s.className='strip';
+        var a=(j+.5-STRIPS/2)*sa;
+        s.style.width=sw+'px'; s.style.height=ch+'px';
+        s.style.backgroundImage=bg;
+        s.style.backgroundSize=cw+'px '+ch+'px';
+        s.style.backgroundPosition=(-j*cw/STRIPS)+'px 0';
+        s.style.transform='rotateY('+a+'rad) translateZ('+R+'px) translate('+(-sw/2)+'px,'+(-ch/2)+'px)';
+        if(j===0){ s.setAttribute('role','img'); s.setAttribute('aria-label',ph.alt); }
+        card.appendChild(s);
+      }
+      track.appendChild(card);
+    }
+  }
+  function readScroll(){
+    var r=run.getBoundingClientRect(), total=r.height-stage.clientHeight;
+    var prog=total>0?Math.min(1,Math.max(0,-r.top/total)):0;
+    target=prog*(N-1);
+  }
+  function render(){
+    track.style.transform='translateZ('+(-R*0.9)+'px) rotateX(-4deg)';
+    for(var i=0;i<cards.length;i++){ var d=i-p; cards[i].style.transform='translate3d('+(-d*gap*LEAN)+'px,'+(d*gap)+'px,0) rotateY('+(-d*step)+'rad)'; }
+    var c=Math.min(N-1,Math.max(0,Math.round(p)));
+    if(c!==lastCap){
+      lastCap=c; var ph=PHOTOS[c%PHOTOS.length];
+      capTag.textContent=ph.tag; capTitle.textContent=ph.label;
+      capCount.textContent=String(c%PHOTOS.length+1).padStart(2,'0')+' / '+String(PHOTOS.length).padStart(2,'0');
+    }
+  }
+  function tick(now){
+    var dt=Math.min(.05,(now-last)/1000); last=now;
+    readScroll();
+    var k=reduce?1:1-Math.pow(1-0.07,dt*60);
+    p+=(target-p)*k; render(); requestAnimationFrame(tick);
+  }
+  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,150)});
+  build(); readScroll(); p=target; render(); requestAnimationFrame(tick);
+})();
+
+/* mobile menu */
+(function(){
+  var b=document.getElementById('menu-btn'), l=document.getElementById('nav-links');
+  b.addEventListener('click',function(){ var o=l.classList.toggle('open'); b.setAttribute('aria-expanded',o); b.textContent=o?'Close':'Menu'; });
+  l.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ l.classList.remove('open'); b.setAttribute('aria-expanded','false'); b.textContent='Menu'; }); });
+})();
+
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var el=document.getElementById(b.dataset.copy), t=el.textContent.replace(/\s*\(placeholder\)$/,'').trim(), orig=b.textContent;
+    function done(){b.textContent='Copied';setTimeout(function(){b.textContent=orig},1400)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+    try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
+  });
+});
+</script>
+</body>
+</html>
