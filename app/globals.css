@@ -162,16 +162,25 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
 .back h3{font:400 30px/1.05 var(--display);margin:8px 0}
 .back p{margin:0;color:var(--muted);font-size:15px;line-height:1.55}
 
-/* phones: no split, verse card then stacked staff cards */
+/* phones: no split. The verse leads in as a quiet quote, then one profile card per person. */
 .split-mobile{display:none}
 @media (max-width:760px){
   .split-run{display:none}
-  .split-mobile{display:grid;gap:20px}
-  .split-mobile .vcard{padding:48px 28px;text-align:center;background:#0e0b14;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center}
-  .split-mobile .vcard .verse{margin:20px auto 0}
-  .split-mobile .back{position:static;transform:none}
-  .split-mobile .back .pic{flex:none;aspect-ratio:1/1;max-width:100%}
-  .back .info{min-height:0}
+  .split-mobile{display:grid;gap:24px;max-width:440px}
+  .split-mobile .vcard{padding:4px 0 8px 20px;border-left:2px solid var(--gcu)}
+  .split-mobile .vcard .verse{font-size:clamp(28px,8vw,36px);margin:14px 0 0}
+  .profile{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .profile-pic{position:relative;aspect-ratio:4/5;background:linear-gradient(160deg,#241539,#100c16);border-bottom:1px solid var(--line)}
+  .profile-body{padding:22px 22px 24px;display:flex;flex-direction:column}
+  .profile h3{font:400 30px/1.05 var(--display);margin:0}
+  .profile .role{display:block;margin-top:10px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
+  .profile p{margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.55}
+  .profile-contact{justify-content:center;min-height:48px;margin-top:20px;border-color:var(--line);font-size:15px}
+  .profile-contact:hover{background:transparent;color:var(--white);border-color:var(--lav)}
+  .profile-contact:active{background:rgba(200,180,240,.08)}
+  /* entrance: set up by JS (Staff.tsx) so cards are never hidden without it */
+  .split-mobile[data-animate] .profile{opacity:0;transform:translateY(20px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+  .split-mobile[data-animate] .profile.in{opacity:1;transform:none}
 }
 
 .parents{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px}

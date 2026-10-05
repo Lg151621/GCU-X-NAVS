@@ -41,7 +41,33 @@ function StaffBack({ p }: { p: StaffMember }) {
   );
 }
 
+/* Phone layout: one complete profile per card (portrait, name, role, bio, contact). */
+function ProfileCard({ p }: { p: StaffMember }) {
+  const firstNames = p.name.replace(/\s+\S+$/, ""); // "Cameron & Emma Kessner" -> "Cameron & Emma"
+  return (
+    <article className="profile">
+      <div className="profile-pic">
+        <Image
+          fill
+          src={p.photo}
+          alt={p.alt}
+          sizes="(max-width: 760px) 440px, 1px"
+          quality={90}
+          style={{ objectFit: "cover", objectPosition: p.position }}
+        />
+      </div>
+      <div className="profile-body">
+        <h3>{p.name}</h3>
+        <span className="role">{p.role}</span>
+        <p>{p.bio || <span className="ph">Short bio: one or two sentences about them.</span>}</p>
+        <a className="btn profile-contact" href="#connect">Contact {firstNames}</a>
+      </div>
+    </article>
+  );
+}
+
 export default function Staff() {
+  const mobileRef = useRef<HTMLDivElement>(null);
   const runRef = useRef<HTMLDivElement>(null);
   const splitRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -88,6 +114,28 @@ export default function Staff() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  // Phone entrance: each profile card fades up once as it enters the viewport.
+  useEffect(() => {
+    const root = mobileRef.current!;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    root.dataset.animate = ""; // cards only start hidden once JS is running
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries
+          .filter((e) => e.isIntersecting)
+          .forEach((e, i) => {
+            const el = e.target as HTMLElement;
+            el.style.transitionDelay = `${i * 90}ms`; // small stagger when several enter together
+            el.classList.add("in");
+            io.unobserve(el); // animate once, no re-triggering
+          });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.15 },
+    );
+    root.querySelectorAll(".profile").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section id="staff">
       <SectionHead label="Our staff" title={<>The people who&apos;ll <em>walk with you.</em></>}>
@@ -113,14 +161,12 @@ export default function Staff() {
         </div>
       </div>
 
-      <div className="split-mobile">
+      <div className="split-mobile" ref={mobileRef}>
         <div className="vcard">
           <Verse />
         </div>
         {staff.map((p) => (
-          <div className="back" key={p.name}>
-            <StaffBack p={p} />
-          </div>
+          <ProfileCard p={p} key={p.name} />
         ))}
       </div>
     </section>
