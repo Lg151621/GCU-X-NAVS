@@ -17,7 +17,15 @@ const hankenGrotesk = Hanken_Grotesk({
   display: "swap",
 });
 
+const siteUrl = process.env.SITE_URL
+  ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Navigators at GCU",
   description:
     "The Navigators at Grand Canyon University. To know Christ, make Him known, and help others do the same.",
