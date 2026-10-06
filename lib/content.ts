@@ -46,11 +46,11 @@ export const staffVerse = {
 
 /* Order = left, middle, right panel in the Staff split card. */
 export const staff: StaffMember[] = [
-  { role: "Directors", name: "Cameron & Emma Kessner", photo: "/images/staff/cameron-emma-kessner.jpg",
-    alt: "Cameron and Emma Kessner, directors of Navigators at GCU", position: "50% 35%", bio: "" },
-  { role: "Staff", name: "Emily Parviz", photo: "/images/staff/emily-parviz.jpg",
+  { role: "Directors", name: "Cameron & Emma Kessner", photo: "/images/staff/staff-photo-3.jpeg",
+    alt: "Cameron and Emma Kessner, directors of Navigators at GCU", position: "25% 35%", bio: "" },
+  { role: "Staff", name: "Emily Parviz", photo: "/images/staff/staff-photo-1.jpg",
     alt: "Emily Parviz, Navigators staff at GCU", position: "50% 30%", bio: "" },
-  { role: "Staff", name: "Elyse LaVallee", photo: "/images/staff/elyse-lavallee.jpg",
+  { role: "Staff", name: "Elyse LaVallee", photo: "/images/staff/staff-photo-2.jpeg",
     alt: "Elyse LaVallee, Navigators staff at GCU", position: "50% 30%", bio: "" },
 ];
 
