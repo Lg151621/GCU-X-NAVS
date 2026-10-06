@@ -27,7 +27,7 @@ export default function Events() {
         </article>
         <article className="event">
           <span className="when">Every other Friday</span>
-          <h3>ASU outreach</h3>
+          <h3>ASU Evangelism</h3>
           <p>We head to Arizona State to share the gospel and have real conversations about Jesus. First-timers go out with someone experienced.</p>
           <dl>
             <dt>Leave from</dt><dd><span className="ph">Pickup spot &amp; time</span></dd>
