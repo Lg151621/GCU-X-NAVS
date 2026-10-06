@@ -1,139 +1,62 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { PHOTOS } from "@/lib/content";
 
-const REPEAT = 1; // each photo shows once
-const CARD_ASPECT = 1.5; // width / height
-const STRIPS = 10; // segments per card, gives the curved look
-const STEP_DEG = 40; // turn between neighbouring cards (9 cards ≈ one full loop)
-const LEAN = 0.55; // how far the spiral leans to the right as it rises
+/* Desktop: photo-story spreads. Each group is one featured photo with smaller supporting photos
+   beside it, alternating sides. Phones: the groups use display:contents, so every photo sits in
+   one native horizontal swipe row with scroll snapping. No animation loop either way. */
 
-function Spiral() {
-  const runRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const capTagRef = useRef<HTMLSpanElement>(null);
-  const capTitleRef = useRef<HTMLDivElement>(null);
+const GROUP = 3; // featured + two supporting photos per spread
+const FEATURED_SIZES = "(max-width: 760px) 84vw, (max-width: 1200px) 66vw, 780px";
+const SUPPORT_SIZES = "(max-width: 760px) 84vw, (max-width: 1200px) 34vw, 400px";
 
+function PhotoStory() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const photos = PHOTOS.filter((p) => p.src);
+  const groups = Array.from({ length: Math.ceil(photos.length / GROUP) }, (_, g) =>
+    photos.slice(g * GROUP, g * GROUP + GROUP),
+  );
+
+  // Desktop entrance: each spread fades/scales up once as it enters the viewport
+  // (CSS limits this to desktop and staggers featured -> supporting photos).
   useEffect(() => {
-    const run = runRef.current!, stage = stageRef.current!, track = trackRef.current!;
-    const capTag = capTagRef.current!, capTitle = capTitleRef.current!;
-    const N = PHOTOS.length * REPEAT;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const step = (STEP_DEG * Math.PI) / 180;
-    PHOTOS.forEach(({ src }) => {
-      if (src) {
-        const image = new window.Image();
-        image.src = src;
-      }
-    });
-    let p = 0, target = 0, last = performance.now(), lastCap = -1, gap = 0, R = 0;
-    let cards: HTMLDivElement[] = [];
-    let raf = 0;
-    let rt: ReturnType<typeof setTimeout> | undefined;
-
-    // Cards are built imperatively: their transforms update every animation frame,
-    // so bypassing React rendering here keeps the scroll effect smooth.
-    function build() {
-      track.innerHTML = "";
-      cards = [];
-      const W = stage.clientWidth, H = stage.clientHeight;
-      let cw = Math.min(400, W * 0.28, H * 0.38 * CARD_ASPECT);
-      if (W < 600) cw = W * 0.56;
-      const ch = cw / CARD_ASPECT;
-      R = cw * 1.9;
-      const span = cw / R, sa = span / STRIPS, sw = 2 * R * Math.sin(sa / 2) + 3;
-      gap = ch * 0.85;
-      for (let i = 0; i < N; i++) {
-        const ph = PHOTOS[i % PHOTOS.length];
-        const card = document.createElement("div");
-        card.className = "card";
-        cards.push(card);
-        const bg = ph.src ? `url("${ph.src}")` : (ph.tint ?? "linear-gradient(150deg,#5b2aa3,#1a0c30)");
-        for (let j = 0; j < STRIPS; j++) {
-          const s = document.createElement("div");
-          s.className = "strip";
-          const a = (j + 0.5 - STRIPS / 2) * sa;
-          s.style.width = sw + "px";
-          s.style.height = ch + "px";
-          s.style.backgroundImage = bg;
-          s.style.backgroundSize = cw + "px " + ch + "px";
-          s.style.backgroundPosition = -j * cw / STRIPS + "px 0";
-          s.style.transform = `rotateY(${a}rad) translateZ(${R}px) translate(${-sw / 2}px,${-ch / 2}px)`;
-          if (j === 0) {
-            s.setAttribute("role", "img");
-            s.setAttribute("aria-label", ph.alt);
-          }
-          card.appendChild(s);
-        }
-        track.appendChild(card);
-      }
-    }
-    function readScroll() {
-      const r = run.getBoundingClientRect(), total = r.height - stage.clientHeight;
-      const prog = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
-      target = prog * (N - 1);
-    }
-    function render() {
-      track.style.transform = `translateZ(${-R * 0.9}px) rotateX(-4deg)`;
-      for (let i = 0; i < cards.length; i++) {
-        const d = i - p;
-        cards[i].style.transform = `translate3d(${-d * gap * LEAN}px,${d * gap}px,0) rotateY(${-d * step}rad)`;
-      }
-      const c = Math.min(N - 1, Math.max(0, Math.round(p)));
-      if (c !== lastCap) {
-        lastCap = c;
-        const ph = PHOTOS[c % PHOTOS.length];
-        capTag.textContent = ph.tag;
-        capTitle.textContent = ph.label;
-      }
-    }
-    function tick(now: number) {
-      const dt = Math.min(0.05, (now - last) / 1000);
-      last = now;
-      readScroll();
-      const k = reduce ? 1 : 1 - Math.pow(1 - 0.07, dt * 60);
-      p += (target - p) * k;
-      render();
-      raf = requestAnimationFrame(tick);
-    }
-    function onResize() {
-      clearTimeout(rt);
-      rt = setTimeout(build, 150);
-    }
-
-    window.addEventListener("resize", onResize);
-    build();
-    readScroll();
-    p = target;
-    render();
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("resize", onResize);
-      clearTimeout(rt);
-      cancelAnimationFrame(raf);
-      track.innerHTML = "";
-    };
+    const grid = gridRef.current!;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    grid.dataset.animate = ""; // photos only start hidden once JS is running
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+    );
+    grid.querySelectorAll(".g-story").forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   return (
-    <div className="spiral-run" id="spiral-run" ref={runRef}>
-      <div className="spiral-stage" id="spiral" ref={stageRef}>
-        <div className="spiral" id="spiral-track" ref={trackRef}></div>
-        <div className="spiral-cap">
-          <span className="label" id="cap-tag" ref={capTagRef}></span>
-          <div className="t" id="cap-title" aria-live="polite" ref={capTitleRef}></div>
+    <div className="g-grid" ref={gridRef}>
+      {groups.map((group, g) => (
+        <div className={`g-story${g % 2 ? " flip" : ""}${group.length < GROUP ? " pair" : ""}`} key={group[0].src}>
+          {group.map((p, i) => (
+            <figure className="g-item" key={p.src}>
+              <Image fill src={p.src!} alt={p.alt} sizes={i === 0 ? FEATURED_SIZES : SUPPORT_SIZES} quality={90} />
+            </figure>
+          ))}
         </div>
-      </div>
+      ))}
     </div>
   );
 }
 
-/* The spiral is optional: collapsed by default, revealed on demand. It is only mounted while
-   open (or closing), so when collapsed it adds no scroll height, sticky stage or animation loop. */
+/* The photos are optional: collapsed by default, revealed on demand. They are only mounted while
+   open (or closing), so the images don't load until someone asks to see them. */
 export default function Gallery() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -143,13 +66,13 @@ export default function Gallery() {
   function toggle() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!open) {
-      // Mount the spiral in its collapsed state and lay it out, then open, so the reveal transition runs.
+      // Mount the photos in their collapsed state and lay them out, then open, so the reveal transition runs.
       flushSync(() => setMounted(true));
       void revealRef.current?.offsetHeight;
       setOpen(true);
       return;
     }
-    // If the reader is partway down the spiral, bring the control back into view before collapsing.
+    // If the reader is partway down the photos, bring the control back into view before collapsing.
     const section = sectionRef.current;
     if (section && section.getBoundingClientRect().top < 0) {
       window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - 72, behavior: "instant" });
@@ -188,7 +111,7 @@ export default function Gallery() {
           if (e.target === e.currentTarget && e.propertyName === "grid-template-rows" && !open) setMounted(false);
         }}
       >
-        <div className="spiral-reveal-inner">{mounted && <Spiral />}</div>
+        <div className="spiral-reveal-inner">{mounted && <PhotoStory />}</div>
       </div>
     </section>
   );
