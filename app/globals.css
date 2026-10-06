@@ -1,4 +1,4 @@
-/* Layout: quiet editorial page. Minimal hero (mission statement), full-bleed scroll-driven photo spiral, then calm sections. Single dark theme by design. */
+/* Layout: quiet editorial page. Minimal hero (mission statement), editorial photo gallery, then calm sections. Single dark theme by design. */
 :root{
   --ink:#09070d;          /* glossy black */
   --panel:#120e18;        /* raised surface */
@@ -70,33 +70,56 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inlin
   text-wrap:balance;
 }
 
-/* spiral gallery */
+/* gallery */
 .gallery{width:100vw;margin-left:calc(50% - 50vw)}
 .gallery-intro{text-align:center;padding:clamp(24px,3vw,40px) 20px 0}
 .gallery-intro h2{margin-top:18px}
 .gallery-intro{padding-bottom:clamp(32px,4vw,48px)}
 .gallery-intro p{margin:18px auto 0;max-width:46ch;color:var(--muted)}
-/* disclosure control for the spiral */
+/* disclosure control for the gallery */
 .reveal-btn{gap:10px;margin-top:28px;border-color:var(--line);font:inherit;font-size:15px;font-weight:500;cursor:pointer}
 .reveal-btn:hover{background:transparent;color:var(--white);border-color:var(--lav)}
 .reveal-btn svg{color:var(--lav);transition:transform .3s ease}
 .reveal-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
-/* height reveal; overflow:clip (not hidden) so the sticky stage inside keeps working */
+/* height reveal */
 .spiral-reveal{display:grid;grid-template-rows:0fr;opacity:0;overflow:clip;transition:grid-template-rows .7s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
 .spiral-reveal.open{grid-template-rows:1fr;opacity:1}
 .spiral-reveal-inner{min-height:0}
 @media (prefers-reduced-motion:reduce){.spiral-reveal,.reveal-btn svg{transition:none}}
-/* The first card starts at the stage's vertical center with the rest below it, so the stage's
-   top half is empty at first. Pulling the run up by 30svh tucks that empty band under the
-   heading; the stage is transparent there, so the heading stays visible. */
-.spiral-run{position:relative;height:440vh;margin-top:-30vh;margin-top:-30svh}
-.spiral-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;perspective:1500px;perspective-origin:50% 45%}
-.spiral{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
-.card{position:absolute;left:0;top:0;transform-style:preserve-3d}
-.strip{position:absolute;left:0;top:0;background-repeat:no-repeat}
-.spiral-stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(transparent,var(--ink));pointer-events:none;z-index:4}
-.spiral-cap{position:absolute;left:clamp(20px,5vw,64px);bottom:clamp(28px,6vh,56px);z-index:5;pointer-events:none}
-.spiral-cap .t{font:400 clamp(28px,3.4vw,40px)/1 var(--display);margin-top:10px}
+/* gallery: photo-story spreads on desktop, native swipe row on phones */
+.g-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(16px,2vw,28px);align-items:start;max-width:1200px;margin:0 auto;padding:0 20px clamp(64px,8vw,112px)}
+.g-item{position:relative;margin:0;overflow:hidden;border-radius:4px;border:1px solid var(--line);background:linear-gradient(160deg,#241539,#100c16);box-shadow:0 28px 60px -34px rgba(0,0,0,.85)}
+/* subtle depth: a faint ink fade at the bottom of each photo */
+.g-item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 62%,rgba(9,7,13,.32));pointer-events:none}
+.g-item img{object-fit:cover;transition:transform .9s cubic-bezier(.22,1,.36,1)}
+@media (min-width:761px){
+  .g-grid{display:flex;flex-direction:column;align-items:stretch;gap:clamp(28px,3.5vw,48px)}
+  /* one spread: featured photo (2/3) beside two stacked supporting photos (1/3); .flip mirrors it */
+  .g-story{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-rows:1fr 1fr;gap:clamp(14px,1.6vw,22px)}
+  .g-story .g-item:first-child{grid-column:1;grid-row:1/3;aspect-ratio:3/2}
+  .g-story .g-item:not(:first-child){grid-column:2}
+  .g-story.flip{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+  .g-story.flip .g-item:first-child{grid-column:2}
+  .g-story.flip .g-item:not(:first-child){grid-column:1}
+  /* a closing spread with a single supporting photo: it fills the full height beside the feature */
+  .g-story.pair{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+  .g-story.pair.flip{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+  .g-story.pair .g-item:not(:first-child){grid-row:1/3}
+  .g-item:hover img{transform:scale(1.03)}
+  /* entrance, set up by JS (Gallery.tsx) so photos are never hidden without it; featured first, then supports */
+  .g-grid[data-animate] .g-item{opacity:0;transform:translateY(16px) scale(.98);transition:opacity .7s ease-out,transform .8s cubic-bezier(.22,1,.36,1)}
+  .g-grid[data-animate] .g-story.in .g-item{opacity:1;transform:none}
+  .g-grid[data-animate] .g-story .g-item:nth-child(2){transition-delay:.12s}
+  .g-grid[data-animate] .g-story .g-item:nth-child(3){transition-delay:.24s}
+}
+/* phones: spreads dissolve so every photo is a direct item of the swipe row */
+@media (max-width:760px){.g-story{display:contents}}
+@media (max-width:760px){
+  .g-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;overscroll-behavior-x:contain;scrollbar-width:none;padding:0 20px 64px}
+  .g-grid::-webkit-scrollbar{display:none}
+  .g-item{flex:0 0 84%;aspect-ratio:4/3;scroll-snap-align:start;box-shadow:none}
+}
+@media (prefers-reduced-motion:reduce){.g-item img{transition:none}}
 
 /* sections */
 section{padding-block:clamp(48px,5vw,64px);border-top:1px solid var(--line)}

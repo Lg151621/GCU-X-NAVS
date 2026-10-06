@@ -20,7 +20,6 @@ export const PHOTOS: Photo[] = [
   { src: "/images/gallery/photo-03-asu-outreach.jpg",   alt: "Students walking across a street in Tempe at sunset", label: "ASU Evangelism",         tag: "ASU outreach" },
   { src: "/images/gallery/photo-04-backyard-night.jpg", alt: "Students gathered in a backyard under string lights", label: "Gathered",          tag: "Community" },
   { src: "/images/gallery/photo-05-forest-selfie.jpg",  alt: "Four friends smiling in a pine forest",              label: "Staff",         tag: "Adventures" },
-  { src: "/images/gallery/photo-06-canes.jpg",          alt: "Students sharing a meal at Raising Cane's",          label: "Post-ASU Evangelism",  tag: "Fellowship" },
   { src: "/images/gallery/photo-07-discussion.jpg",     alt: "Guys sitting in a circle talking with Bibles open",  label: "Iron sharpens iron", tag: "Brotherhood" },
   { src: "/images/gallery/photo-08-study-night.jpg",    alt: "A full living room of students reading together",   label: "Study night",        tag: "Growing together" },
   { src: "/images/gallery/photo-09-couch.jpg",          alt: "Five friends laughing on a couch",                   label: "TUFF",           tag: "Doing life together" },
