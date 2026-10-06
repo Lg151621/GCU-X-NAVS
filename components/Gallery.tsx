@@ -86,7 +86,7 @@ export default function Gallery() {
       <div className="gallery-intro">
         <span className="label">This is Navs</span>
         <h2>
-          Life <em>together.</em>
+          Life <em>together</em>
         </h2>
         <p>See what community, discipleship, and everyday life with Navs looks like.</p>
         <button

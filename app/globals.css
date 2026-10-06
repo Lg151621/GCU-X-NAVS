@@ -122,6 +122,15 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inlin
 }
 @media (prefers-reduced-motion:reduce){.g-item img{transition:none}}
 
+/* shared bidirectional section reveal (components/ScrollReveal.tsx): every major section below the hero
+   fades/rises in when it enters view and fades back out when it leaves. .rv-hidden is the instant start state. */
+.rv-section{transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+.rv-section.rv-out{opacity:0;transform:translateY(28px)}
+.rv-section.rv-hidden{opacity:0;transform:translateY(28px);transition:none}
+@media (max-width:760px){.rv-section.rv-out,.rv-section.rv-hidden{transform:translateY(14px)}}
+/* reduced motion: opacity only */
+@media (prefers-reduced-motion:reduce){.rv-section.rv-out,.rv-section.rv-hidden{transform:none}}
+
 /* sections */
 section{padding-block:clamp(48px,5vw,64px);border-top:1px solid var(--line)}
 .gallery{padding-block:0}

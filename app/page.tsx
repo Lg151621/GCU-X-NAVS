@@ -6,6 +6,7 @@ import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Parents from "@/components/Parents";
+import ScrollReveal from "@/components/ScrollReveal";
 import Staff from "@/components/Staff";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <Connect />
         <Footer />
       </main>
+      <ScrollReveal />
     </>
   );
 }
