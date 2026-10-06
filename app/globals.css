@@ -28,6 +28,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inlin
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none}
 .logo{width:38px;height:auto;display:block}
 .hero-logo{width:56px;height:auto;margin-bottom:28px}
+.logo,.hero-logo{filter:invert(1);mix-blend-mode:screen}
 .brand b{display:block;font:400 24px/1 var(--display)}
 .brand small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .links{display:flex;align-items:center;gap:30px;font-size:15px;font-weight:500}
@@ -52,9 +53,9 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inlin
 /* hero */
 .hero{
   text-align:center;
-  /* keep a spacious hero while bringing the gallery into view sooner */
-  min-height:calc(80vh - 72px);
-  min-height:calc(80svh - 72px);
+  /* fill the first screen below the nav (72px) */
+  min-height:calc(100vh - 72px);
+  min-height:calc(100svh - 72px);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -185,6 +186,7 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
   .split-mobile[data-animate] .profile.in{opacity:1;transform:none}
 }
 
+#parents{padding-bottom:clamp(24px,3vw,36px)}
 .parents{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px}
 @media (max-width:880px){.parents{grid-template-columns:1fr;gap:32px}}
 .qa div{padding:26px 0;border-top:1px solid var(--line)}
@@ -199,7 +201,7 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
 .support p{margin:12px 0 22px;color:rgba(255,255,255,.85)}
 .support .btn:hover{color:var(--gcu)}
 
-#connect{padding-bottom:clamp(40px,5vw,56px)}
+#connect{padding-top:clamp(24px,3vw,36px);padding-bottom:clamp(16px,2vw,24px)}
 .connect{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);border-top:1px solid var(--line)}
 @media (max-width:860px){.connect{grid-template-columns:1fr}}
 .way{padding:32px 32px 32px 0;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -221,5 +223,5 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
 .email{justify-content:center}
 @media (max-width:560px){.groupme{flex-direction:column;align-items:flex-start;gap:24px}}
 
-footer{padding-block:44px 60px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line)}
+footer{padding-block:24px 32px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line)}
 footer b{color:var(--white);font:400 22px var(--display)}

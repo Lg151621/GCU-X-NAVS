@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   title: "Navigators at GCU",
   description:
     "The Navigators at Grand Canyon University. To know Christ, make Him known, and help others do the same.",
-  icons: { icon: "/assets/navigators-logo-white.png" },
+  icons: { icon: "/assets/Navigators_Sail_Black.webp" },
 };
 
 export const viewport: Viewport = {

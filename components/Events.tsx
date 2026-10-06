@@ -7,7 +7,7 @@ export default function Events() {
         Three rhythms shape our week. Come to one or all three. No experience needed, and you don&apos;t need a friend to bring you.
       </SectionHead>
       <div className="week">
-        <article className="event feature">
+        <article className="event">
           <span className="when">Mondays · <span className="ph">7:00 PM</span></span>
           <h3>NavNight</h3>
           <p>Our main weekly gathering, centered on abiding in Jesus and what that looks like in everyday life as a student.</p>

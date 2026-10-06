@@ -18,7 +18,7 @@ export default function Navbar() {
     <header>
       <nav className="nav" aria-label="Main">
         <a className="brand" href="#top">
-          <Image className="logo" src="/assets/navigators-logo-white.png" alt="The Navigators logo" width={38} height={37} priority />
+          <Image className="logo" src="/assets/Navigators_Sail_Black.webp" alt="The Navigators logo" width={38} height={37} priority />
           <span>
             <b>The Navigators</b>
             <small>Grand Canyon University</small>
