@@ -41,7 +41,7 @@ function StaffBack({ p }: { p: StaffMember }) {
   );
 }
 
-/* Phone layout: one complete profile per card (portrait, name, role, bio, contact). */
+/* Phone layout: one complete profile per card (portrait, name, role, bio). */
 function ProfileCard({ p }: { p: StaffMember }) {
   const firstNames = p.name.replace(/\s+\S+$/, ""); // "Cameron & Emma Kessner" -> "Cameron & Emma"
   return (
@@ -60,7 +60,9 @@ function ProfileCard({ p }: { p: StaffMember }) {
         <h3>{p.name}</h3>
         <span className="role">{p.role}</span>
         <p>{p.bio || <span className="ph">Short bio: one or two sentences about them.</span>}</p>
-        <a className="btn profile-contact" href="#connect">Contact {firstNames}</a>
+        {p.role === "Directors" && (
+          <a className="btn profile-contact" href="#connect">Contact {firstNames}</a>
+        )}
       </div>
     </article>
   );

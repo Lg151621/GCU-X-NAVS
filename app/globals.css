@@ -105,6 +105,8 @@ section{padding-block:clamp(80px,10vw,128px);border-top:1px solid var(--line)}
 h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;margin:18px 0 0;text-wrap:balance}
 .sec-head p{color:var(--muted);margin:22px 0 0;max-width:58ch}
 
+#who .sec-head{margin-bottom:28px}
+.who-cta{display:flex;width:fit-content;margin-bottom:48px;border-color:var(--line)}
 .mission{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
 @media (max-width:860px){.mission{grid-template-columns:1fr}}
 .mission article{padding:32px 32px 8px 0}
