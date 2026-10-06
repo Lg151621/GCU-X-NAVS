@@ -35,7 +35,6 @@ export default function Events() {
           </dl>
         </article>
       </div>
-      <p className="aside">Nervous about outreach? Everyone is the first time. We&apos;ll pair you with someone.</p>
     </section>
   );
 }
