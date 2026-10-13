@@ -13,7 +13,7 @@ export default function Events() {
         </article>
         <article className="event">
           <h3>Prayer walk</h3>
-          <p>We start Friday mornings walking campus together and praying for GCU, our classmates, and our city.</p>
+          <p>We walk campus together and pray for GCU, our classmates, and our city.</p>
         </article>
         <article className="event">
           <h3>ASU Evangelism</h3>
