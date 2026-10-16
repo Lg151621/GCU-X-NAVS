@@ -61,7 +61,7 @@ export const staff: StaffMember[] = [
   { role: "Directors", name: "Cameron & Emma Kessner", photo: "/images/staff/staff-photo-3.jpeg",
     alt: "Cameron and Emma Kessner, directors of Navigators at GCU", position: "25% 35%", bio: "The Kessners have been on staff with the Navigators for 7 years (5 of which at Cam’s alma mater, the University of Arizona). They love hiking, camping, and listening to records at home on a rainy day." },
   { role: "Staff", name: "Emily Parviz", photo: "/images/staff/staff-photo-1.jpg",
-    alt: "Emily Parviz, Navigators staff at GCU", position: "50% 30%", bio: "" },
+    alt: "Emily Parviz, Navigators staff at GCU", position: "50% 30%", bio: "Emily Parviz recently graduated from the University of California San Diego and now serves with The Navigators at Grand Canyon University. She is excited to help pioneer the ministry at GCU, sharing the gospel, discipling women, and raising up disciplemakers on campus. Her prayer for the ministry is rooted in Isaiah 60:22." },
   { role: "Staff", name: "Elyse LaVallee", photo: "/images/staff/staff-photo-2.jpeg",
     alt: "Elyse LaVallee, Navigators staff at GCU", position: "50% 30%", bio: "" },
 ];

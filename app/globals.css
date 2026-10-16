@@ -186,8 +186,8 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
 /* --split-h: card height. The stage is only as tall as the card and pins it centered
    below the nav (73px), so there is no empty band above or below the card.
    Run height = card + scroll distance for the animation (180vh). */
-.split-run{--split-h:min(560px,calc(100svh - 160px));position:relative;height:calc(var(--split-h) + 180vh)}
-.split-stage{position:sticky;top:calc(73px + (100svh - 73px - var(--split-h)) / 2);height:var(--split-h);display:grid;place-items:center;perspective:1800px}
+.split-run{--split-h:min(560px,calc(100svh - 160px));--bio-extra:0px;position:relative;height:calc(var(--split-h) + 180vh + var(--bio-extra))}
+.split-stage{position:sticky;top:calc(73px + (100svh - 73px - var(--split-h)) / 2);height:calc(var(--split-h) + var(--bio-extra));display:grid;align-items:start;justify-items:center;perspective:1800px}
 .split{position:relative;display:flex;justify-content:center;width:min(100%,1080px);height:var(--split-h)}
 /* panels overlap by 1px so no seam shows while the card is whole */
 .panel{position:relative;flex:0 0 calc(33.334% + 1px);margin-left:-1px;height:100%;transform-style:preserve-3d;will-change:transform}
@@ -202,26 +202,44 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
 .verse{font:400 clamp(28px,3.4vw,48px)/1.02 var(--display);letter-spacing:-.02em;max-width:30ch;text-wrap:balance;margin:28px 0 0;color:var(--white)}
 .verse em{font-style:italic;color:var(--lav)}
 .verse-ref{display:block;font:600 12px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--lav)}
-.back{transform:rotateY(180deg);background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
-.back .pic{flex:1 1 auto;min-height:0;position:relative;background:linear-gradient(160deg,#241539,#100c16)}
+.back{transform:rotateY(180deg);background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;bottom:auto;min-height:100%;transition:border-color .25s ease}
+.back .pic{flex:none;height:calc(var(--split-h) - 174px);position:relative;background:linear-gradient(160deg,#241539,#100c16)}
 .back .info{padding:20px 22px 24px;min-height:172px}
 .back .role{display:block;margin:0;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
 .back h3{font:400 30px/1.05 var(--display);margin:8px 0}
 .back p{margin:0;color:var(--muted);font-size:15px;line-height:1.55}
 
+/* One shared bio state; grid tracks keep interrupted open/close transitions reversible. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.bio-toggle{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:44px;margin-top:8px;padding:8px 0;border:0;background:transparent;color:var(--lav);font:500 14px var(--body);text-align:left;cursor:pointer}
+.bio-toggle:hover{color:var(--white)}
+.bio-toggle svg{flex:none;transition:transform .34s cubic-bezier(.22,1,.36,1)}
+.staff-bio[data-open="true"] .bio-toggle svg{transform:rotate(180deg)}
+.bio-reveal{display:grid;grid-template-rows:0fr;transition:grid-template-rows .34s cubic-bezier(.22,1,.36,1) .08s}
+.staff-bio[data-open="true"] .bio-reveal{grid-template-rows:1fr;transition-delay:0s}
+.bio-content{min-height:0;overflow:hidden}
+.bio-text{padding-top:10px;opacity:0;transform:translateY(6px);transition:opacity .1s ease,transform .15s ease}
+.bio-text .ph{white-space:normal}
+.staff-bio[data-open="true"] .bio-text{opacity:1;transform:none;transition:opacity .2s ease .12s,transform .24s cubic-bezier(.22,1,.36,1) .12s}
+.back[data-bio-open="true"],.profile[data-bio-open="true"]{border-color:var(--lav)}
+@media (prefers-reduced-motion:reduce){
+  .bio-reveal,.bio-text,.staff-bio[data-open="true"] .bio-text,.bio-toggle svg{transition:none;transform:none}
+}
+
 /* phones: no split. The verse leads in as a quiet quote, then one profile card per person. */
 .split-mobile{display:none}
 @media (max-width:760px){
   .split-run{display:none}
-  .split-mobile{display:grid;gap:24px;max-width:440px}
+  .split-mobile{display:grid;gap:24px;max-width:440px;align-items:start}
   .split-mobile .vcard{padding:4px 0 8px 20px;border-left:2px solid var(--gcu)}
   .split-mobile .vcard .verse{font-size:clamp(28px,8vw,36px);margin:14px 0 0}
-  .profile{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .profile{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .25s ease}
   .profile-pic{position:relative;aspect-ratio:4/5;background:linear-gradient(160deg,#241539,#100c16);border-bottom:1px solid var(--line)}
   .profile-body{padding:22px 22px 24px;display:flex;flex-direction:column}
   .profile h3{font:400 30px/1.05 var(--display);margin:0}
   .profile .role{display:block;margin-top:10px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav)}
   .profile p{margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.55}
+  .profile .bio-text p{margin:0}
   .profile-contact{justify-content:center;min-height:48px;margin-top:20px;border-color:var(--line);font-size:15px}
   .profile-contact:hover{background:transparent;color:var(--white);border-color:var(--lav)}
   .profile-contact:active{background:rgba(200,180,240,.08)}
