@@ -6,9 +6,7 @@ import SectionHead from "./SectionHead";
 export default function Connect() {
   return (
     <section id="connect">
-      <SectionHead label="Come say hi" title={<>See you <em>Monday.</em></>}>
-        The easiest first step is showing up to NavNight. If you&apos;d rather reach out first, any of these works.
-      </SectionHead>
+      <SectionHead label="Come say hi" title={<>Get <em>connected.</em></>} />
       <div className="connect">
         <div className="way groupme">
           <div className="qr-card">

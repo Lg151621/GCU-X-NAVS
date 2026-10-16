@@ -9,7 +9,7 @@ export default function Events() {
       <div className="week">
         <article className="event">
           <h3>NavNight</h3>
-          <p>Our main weekly gathering, centered on abiding in Jesus and what that looks like in everyday life as a student.</p>
+          <p>focused on abiding with Jesus together in His Word</p>
         </article>
         <article className="event">
           <h3>Prayer walk</h3>

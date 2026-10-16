@@ -38,15 +38,15 @@ export type StaffMember = {
 };
 
 export const staffVerse = {
-  ref: "Romans 6:23",
-  lead: "For the wages of sin is death, but the free gift of God is",
-  emphasis: "eternal life in Christ Jesus our Lord.",
+  ref: "Colossians 1:28–29",
+  lead: "Him we proclaim, warning everyone and teaching everyone with all wisdom, that we may present everyone mature in Christ.",
+  emphasis: "For this I toil, struggling with all his energy that he powerfully works within me.",
 };
 
 /* Order = left, middle, right panel in the Staff split card. */
 export const staff: StaffMember[] = [
   { role: "Directors", name: "Cameron & Emma Kessner", photo: "/images/staff/staff-photo-3.jpeg",
-    alt: "Cameron and Emma Kessner, directors of Navigators at GCU", position: "25% 35%", bio: "" },
+    alt: "Cameron and Emma Kessner, directors of Navigators at GCU", position: "25% 35%", bio: "The Kessners have been on staff with the Navigators for 7 years (5 of which at Cam’s alma mater, the University of Arizona). They love hiking, camping, and listening to records at home on a rainy day." },
   { role: "Staff", name: "Emily Parviz", photo: "/images/staff/staff-photo-1.jpg",
     alt: "Emily Parviz, Navigators staff at GCU", position: "50% 30%", bio: "" },
   { role: "Staff", name: "Elyse LaVallee", photo: "/images/staff/staff-photo-2.jpeg",

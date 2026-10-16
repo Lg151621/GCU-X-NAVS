@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "legacy/index.html"
+        ],
+        "createdAt": "2026-10-16T17:40:15.405Z",
+        "reason": "Agent: existing GCU brand purple (#522398, PMS 267 C) and lavender in the archived reference; client explicitly requested preserving site appearance."
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "files": [
+          "legacy/index.html"
+        ],
+        "createdAt": "2026-10-16T17:40:15.474Z",
+        "reason": "Agent: incumbent Instrument Serif typography in the archived reference; client requested content-only changes and preserving existing typography."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "legacy/index.html"
+        ],
+        "createdAt": "2026-10-16T17:40:15.541Z",
+        "reason": "Agent: archived NavNight featured-event top stripe is an existing semantic highlight, and client explicitly requested preserving event styling."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "legacy/index.html"
+        ],
+        "createdAt": "2026-10-16T17:40:19.131Z",
+        "reason": "Agent: verified false positives: sections already use 80–128px padding-block, .doers uses 36–64px padding, and the gallery child .gallery-intro provides 72–112px top padding."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/globals.css"
+        ],
+        "createdAt": "2026-10-16T17:41:26.786Z",
+        "reason": "Agent: verified in HEAD that .split-mobile .vcard is an existing Scripture quotation marker in GCU brand purple; client requested preserving existing appearance while updating content. Border unchanged by this task."
+      }
+    ]
+  }
+}
