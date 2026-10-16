@@ -6,7 +6,7 @@ import SectionHead from "./SectionHead";
 export default function Connect() {
   return (
     <section id="connect">
-      <SectionHead label="Come say hi" title={<>Get <em>connected.</em></>} />
+      <SectionHead title={<>Get <em>connected.</em></>} />
       <div className="connect">
         <div className="way groupme">
           <div className="qr-card">

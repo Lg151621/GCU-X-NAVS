@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Parents from "@/components/Parents";
 import ScrollReveal from "@/components/ScrollReveal";
 import Staff from "@/components/Staff";
+import Story from "@/components/Story";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Hero />
         <Gallery />
         <About />
+        <Story />
         <Events />
         <Staff />
         <Parents />

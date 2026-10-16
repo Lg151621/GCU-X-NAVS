@@ -3,6 +3,19 @@
 /** Navigators staff giving page. Swap for the Kessners' direct page when available. */
 export const givingUrl = "https://donations.navigators.org/s/support-staff/";
 
+export const featuredStory = {
+  eyebrow: "A STORY OF GOD'S FAITHFULNESS",
+  heading: { lead: "Look what God has", emphasis: "done." },
+  intro: "What begins with one life invested in another can grow into generations of disciples. See how God has been at work through prayer, friendship, and Life-to-Life discipleship at GCU.",
+  title: "God’s Grand Story: The Ripple Effect of Discipleship at GCU",
+  attribution: "A story from The Navigators",
+  cta: "Read the full story",
+  url: "https://www.navigators.org/blog/gods-grand-story-the-ripple-effect-of-discipleship-at-gcu/",
+  // User-selected group photo, converted from the supplied HEIC.
+  photo: "/images/gcu-navs-community-group.jpg",
+  alt: "GCU Navigators community gathered for a group photo outdoors",
+};
+
 export type Photo = {
   /** Path under /public, e.g. "/images/gallery/photo-01.jpg". null shows the purple tint placeholder. */
   src: string | null;
