@@ -162,7 +162,7 @@ h2{font:400 clamp(38px,5.2vw,68px)/1.02 var(--display);letter-spacing:-.015em;ma
 .story-copy .label{line-height:1.5}
 .story-cta{min-height:48px}
 .story-feature{margin:0;min-width:0}
-.story-feature img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:50% 55%;border-radius:4px}
+.story-feature img{display:block;width:100%;height:auto;border-radius:4px}
 .story-feature figcaption{padding-top:20px}
 .story-source{margin:0 0 10px;color:var(--muted);font-size:14px}
 .story-feature h3{font:400 clamp(26px,2.6vw,34px)/1.15 var(--display);margin:0;text-wrap:balance}

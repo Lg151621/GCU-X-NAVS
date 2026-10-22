@@ -11,8 +11,8 @@ export const featuredStory = {
   attribution: "A story from The Navigators",
   cta: "Read the full story",
   url: "https://www.navigators.org/blog/gods-grand-story-the-ripple-effect-of-discipleship-at-gcu/",
-  // User-selected group photo, converted from the supplied HEIC.
-  photo: "/images/gcu-navs-community-group.jpg",
+  // User-selected landscape group photo.
+  photo: "/images/gcu-navs-story-group.jpg",
   alt: "GCU Navigators community gathered for a group photo outdoors",
 };
 
