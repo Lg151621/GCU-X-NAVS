@@ -27,8 +27,8 @@ export default function Story() {
           <Image
             src={featuredStory.photo}
             alt={featuredStory.alt}
-            width={2000}
-            height={1500}
+            width={2400}
+            height={1800}
             sizes="(max-width: 860px) calc(100vw - 40px), (max-width: 1200px) 50vw, 600px"
             quality={90}
           />

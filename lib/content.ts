@@ -12,7 +12,7 @@ export const featuredStory = {
   cta: "Read the full story",
   url: "https://www.navigators.org/blog/gods-grand-story-the-ripple-effect-of-discipleship-at-gcu/",
   // User-selected landscape group photo.
-  photo: "/images/gcu-navs-story-group.jpg",
+  photo: "/images/gcu-navs-story-community.jpg",
   alt: "GCU Navigators community gathered for a group photo outdoors",
 };
 
