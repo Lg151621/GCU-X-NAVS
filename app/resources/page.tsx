@@ -10,7 +10,7 @@ import SectionHead from "@/components/SectionHead";
 import { BINDER, MEETING_PLAN, publishedHref, RESOURCE_SECTIONS } from "@/lib/resources";
 
 export const metadata: Metadata = {
-  title: "Discipleship Resources | Navigators at GCU",
+  title: "Disciple-Making Resources | Navigators at GCU",
   description:
     "Practical, Scripture-centered resources from The Navigators at GCU for walking alongside others, growing in faith, and helping people follow Jesus.",
   alternates: { canonical: "/resources" },
@@ -29,7 +29,7 @@ export default function ResourcesPage() {
       <main className="wrap" id="top">
         <div className="hero page-hero">
           <Image className="hero-logo" src="/assets/Navigators_Sail_Black.webp" alt="" width={64} height={62} priority />
-          <span className="label">Discipleship resources</span>
+          <span className="label">Disciple-Making Resources</span>
           <h1>
             Grow in Christ. <em>Help others do the same.</em>
           </h1>

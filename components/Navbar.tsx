@@ -11,7 +11,7 @@ const LINKS = [
   { href: "#parents", label: "Parents" },
 ];
 
-const PAGES = [{ href: "/resources", label: "Resources" }];
+const PAGES = [{ href: "/resources", label: "Disciple-Making" }];
 
 type Props = {
   /** Prefix for the homepage section links. "" on the homepage, "/" on other pages. */
