@@ -32,9 +32,14 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:300;margin-inlin
 .brand b{display:block;font:400 24px/1 var(--display)}
 .brand small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .links{display:flex;align-items:center;gap:30px;font-size:15px;font-weight:500}
-.links a{text-decoration:none;color:var(--white);padding-block:6px;border-bottom:1px solid transparent;white-space:nowrap}
+.links a{position:relative;text-decoration:none;color:var(--white);padding-block:6px;border-bottom:1px solid transparent;white-space:nowrap}
 @media (min-width:881px) and (max-width:1000px){.links{gap:20px}}
-.links a:hover,.links a[aria-current="page"]{border-bottom-color:var(--lav)}
+/* text links: the underline draws in from the left on hover and retracts on exit; it sits exactly where the
+   1px border did, so nothing reflows. Keyboard focus and the current page show it without hovering. */
+.links a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--lav);transform:scaleX(0);transform-origin:left;transition:transform .2s ease-out}
+@media (hover:hover){.links a:not(.btn):hover::after{transform:scaleX(1);transition:transform .3s cubic-bezier(.22,1,.36,1)}}
+.links a:not(.btn):focus-visible::after,.links a[aria-current="page"]::after{transform:scaleX(1)}
+@media (prefers-reduced-motion:reduce){.links a:not(.btn)::after,.links a:not(.btn):hover::after{transition:none}}
 .menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--white);border-radius:999px;padding:8px 16px;font:500 14px var(--body);cursor:pointer}
 @media (max-width:880px){
   .menu-btn{display:block}

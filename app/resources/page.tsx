@@ -57,7 +57,7 @@ export default function ResourcesPage() {
               We were delighted to share with you not only the gospel of God <em>but our lives as well.</em>
             </blockquote>
             <p>
-              If a book were all it took to make disciple makers, the world would already be reached. God uses people. Use these tools inside a real friendship, not in place of one.
+              If a book were all it took to make disciple makers, the world would already be reached. God uses people. Use these tools inside a real discipleship relationship, not in place of one.
               <br />
               <span className="ref">1 Thessalonians 2:8 (NIV)</span>
             </p>
@@ -103,7 +103,7 @@ export default function ResourcesPage() {
           <p className="aside">
             {anyPending
               ? <>Some downloads will be added once the binder&apos;s creators confirm they can be shared publicly. Until then, ask a staff member about using them.</>
-              : <>Every PDF keeps the binder&apos;s original pages and ends with its credits page. Print them, share them, and use them with someone.</>}
+              : <>Every PDF keeps the binder&apos;s original pages and ends with its credits page. Share them freely, but please don&apos;t reproduce them for profit.</>}
           </p>
         </section>
 
@@ -123,8 +123,8 @@ export default function ResourcesPage() {
         </section>
 
         <section id="walk">
-          <SectionHead label="Walk with someone" title={<>Tools work best <em>with a friend.</em></>}>
-            At Navs, every student can meet one-on-one with a mentor. If you&apos;d like someone to walk through these with you, reach out.
+          <SectionHead label="Walk with someone" title={<>Tools work best with someone <em>walking alongside you.</em></>}>
+            If you&apos;d like someone to walk through these with you, reach out.
           </SectionHead>
           <Link className="btn primary" href="/#connect">Get connected</Link>
         </section>

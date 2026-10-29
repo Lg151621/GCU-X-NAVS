@@ -80,7 +80,7 @@ export default function ResourceLibrary() {
                   <div className="res-section-bar">
                     <p>
                       The whole {s.title} section in one file, from its cover page through{" "}
-                      {s.resources[s.resources.length - 1].title}.
+                      {s.resources[s.resources.length - 1].title}, plus the binder&apos;s credits page.
                     </p>
                     <ResourceDownload file={s.file} name={`the ${s.title} section`} label="Download section PDF" />
                   </div>
@@ -90,7 +90,7 @@ export default function ResourceLibrary() {
                         <div className="res-row-text">
                           <h4>{r.title}</h4>
                           {r.description && <p>{r.description}</p>}
-                          <span className="res-meta">Binder {pages(r.printedPages)}</span>
+                          <span className="res-meta">Binder {pages(r.printedPages)} · PDF {pages(r.pdfPages)}</span>
                           {r.credit && <p className="res-credit">{r.credit}</p>}
                         </div>
                         <ResourceDownload file={r.file} name={r.title} preview compact />
