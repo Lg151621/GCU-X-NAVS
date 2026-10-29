@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const LINKS = [
@@ -10,14 +11,23 @@ const LINKS = [
   { href: "#parents", label: "Parents" },
 ];
 
-export default function Navbar() {
+const PAGES = [{ href: "/resources", label: "Resources" }];
+
+type Props = {
+  /** Prefix for the homepage section links. "" on the homepage, "/" on other pages. */
+  home?: string;
+  /** Path of the current page, marked with aria-current. */
+  current?: string;
+};
+
+export default function Navbar({ home = "", current }: Props) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
   return (
     <header>
       <nav className="nav" aria-label="Main">
-        <a className="brand" href="#top">
+        <a className="brand" href={`${home}#top`}>
           <Image className="logo" src="/assets/Navigators_Sail_Black.webp" alt="The Navigators logo" width={38} height={37} priority />
           <span>
             <b>The Navigators</b>
@@ -36,11 +46,16 @@ export default function Navbar() {
         </button>
         <div className={open ? "links open" : "links"} id="nav-links">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={close}>
+            <a key={l.href} href={`${home}${l.href}`} onClick={close}>
               {l.label}
             </a>
           ))}
-          <a className="btn primary" href="#connect" onClick={close}>
+          {PAGES.map((l) => (
+            <Link key={l.href} href={l.href} onClick={close} aria-current={current === l.href ? "page" : undefined}>
+              {l.label}
+            </Link>
+          ))}
+          <a className="btn primary" href={`${home}#connect`} onClick={close}>
             Get connected
           </a>
         </div>
