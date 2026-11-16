@@ -63,7 +63,7 @@ export const staff: StaffMember[] = [
   { role: "Staff", name: "Emily Parviz", photo: "/images/staff/staff-photo-1.jpg",
     alt: "Emily Parviz, Navigators staff at GCU", position: "50% 30%", bio: "Emily Parviz recently graduated from the University of California San Diego and now serves with The Navigators at Grand Canyon University. She is excited to help pioneer the ministry at GCU, sharing the gospel, discipling women, and raising up disciplemakers on campus. Her prayer for the ministry is rooted in Isaiah 60:22." },
   { role: "Staff", name: "Elyse LaVallee", photo: "/images/staff/staff-photo-2.jpeg",
-    alt: "Elyse LaVallee, Navigators staff at GCU", position: "50% 30%", bio: "" },
+    alt: "Elyse LaVallee, Navigators staff at GCU", position: "50% 30%", bio: "Elyse is an alum of the University of Arizona (bear down!) who was a student leader with the Navigators in college and is now on staff full-time with the Navs at GCU. Her heart is for all the nations to know Christ’s love through simple relationships that spur one another on to know Jesus deeper. To this end, Elyse is excited to disciple young women and help them mature in their relationship with Jesus. She encourages GCU students to delight in spending time with Jesus! (how else will we get to know him?!) She enjoys birdwatching and going on outdoor adventures with her cockatiel, Pico." },
 ];
 
 export type ContactWay = {
